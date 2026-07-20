@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#e8ddc4">
+  <meta name="description" content="檐下听雨——一幅可被风拨动的文字帘。">
+  <title>檐下听雨 · Words in Gravity</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="artwork" aria-label="可拨动的檐下文字帘互动作品">
+    <canvas id="scene" aria-hidden="true"></canvas>
+
+    <header class="art-title">
+      <span>檐下听雨</span>
+      <small>WORDS IN GRAVITY</small>
+    </header>
+
+    <p class="gesture-hint">
+      <span class="gesture-hint__line" aria-hidden="true"></span>
+      划过文字，听风经过
+    </p>
+
+    <div class="cursor-ring" aria-hidden="true"></div>
+    <noscript>此作品需要启用 JavaScript。</noscript>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
