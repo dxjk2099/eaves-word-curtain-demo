@@ -393,6 +393,25 @@ function boot() {
   const ctx = canvas.getContext('2d');
   const artwork = document.querySelector('.artwork');
   const ring = document.querySelector('.cursor-ring');
+  const soundButton = document.querySelector('.sound-toggle');
+  const soundLabel = soundButton.querySelector('[data-sound-label]');
+  let hasAttemptedAutoStart = false;
+  const updateSoundButton = (playing) => {
+    soundButton.setAttribute('aria-pressed', String(playing));
+    soundButton.setAttribute('aria-label', playing ? '静音环境声音' : '开启环境声音');
+    soundLabel.textContent = playing ? '静音' : '声音 开';
+  };
+  const soundscape = typeof window.createAmbientSoundscape === 'function'
+    ? window.createAmbientSoundscape({ onStateChange: updateSoundButton })
+    : null;
+  if (soundscape) {
+    soundButton.hidden = false;
+    updateSoundButton(false);
+    soundButton.addEventListener('click', async () => {
+      hasAttemptedAutoStart = true;
+      await soundscape.toggle();
+    });
+  }
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const physicsConfig = getPhysicsConfig(reducedMotion);
   const glyphCache = new Map();
@@ -489,8 +508,16 @@ function boot() {
     window.requestAnimationFrame(frame);
   };
 
+  const beginPointer = (event) => {
+    movePointer(event);
+    if (soundscape && !hasAttemptedAutoStart) {
+      hasAttemptedAutoStart = true;
+      soundscape.start();
+    }
+  };
+
   canvas.addEventListener('pointermove', movePointer);
-  canvas.addEventListener('pointerdown', movePointer);
+  canvas.addEventListener('pointerdown', beginPointer);
   canvas.addEventListener('pointerup', endPointer);
   canvas.addEventListener('pointercancel', endPointer);
   canvas.addEventListener('pointerleave', endPointer);

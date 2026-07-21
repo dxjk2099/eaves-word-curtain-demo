@@ -141,6 +141,50 @@ noscript {
   transform: translate(-50%, -50%);
 }
 
+.sound-toggle {
+  position: absolute;
+  right: clamp(22px, 4vw, 60px);
+  bottom: clamp(22px, 5vh, 56px);
+  z-index: 5;
+  min-width: 96px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid rgba(61, 47, 31, 0.28);
+  border-radius: 999px;
+  background: rgba(242, 234, 215, 0.58);
+  color: var(--muted);
+  font: 500 10px/1 Georgia, "Songti SC", serif;
+  letter-spacing: 0.16em;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.sound-toggle[hidden] { display: none; }
+.sound-toggle:hover,
+.sound-toggle:focus-visible {
+  color: var(--ink);
+  border-color: rgba(61, 47, 31, 0.56);
+  background: rgba(242, 234, 215, 0.8);
+  outline: none;
+}
+
+.sound-toggle__mark {
+  width: 7px;
+  height: 7px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+.sound-toggle[aria-pressed="true"] .sound-toggle__mark {
+  background: var(--red);
+  border-color: var(--red);
+  box-shadow: 0 0 0 4px rgba(142, 47, 32, 0.1);
+}
+
 @media (max-width: 680px) {
   .gesture-hint {
     top: 18px;
@@ -166,10 +210,17 @@ noscript {
     width: 42px;
     height: 42px;
   }
+
+  .sound-toggle {
+    right: 18px;
+    bottom: 18px;
+    min-width: 88px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cursor-ring {
+  .cursor-ring,
+  .sound-toggle {
     transition: none;
   }
 }
